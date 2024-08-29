@@ -1,0 +1,60 @@
+import pandas as pd
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+movie=pd.read_csv('IMDb Movies India.csv',encoding="latin1")
+movie
+movie.head()
+movie.info()
+movie.describe()
+movie.isnull()
+movie.isnull().sum()
+movie.dropna(subset=['Rating'], inplace=True)
+movie.isnull().sum()
+movie.dropna(subset=['Actor 1','Actor 2','Actor 3','Director','Genre'],inplace=True)
+movie.isnull().sum()
+movie.head()
+movie['Votes'] = movie['Votes'].str.replace(',','').astype(int)
+movie['Year'] = movie['Year'].str.strip('()').astype(int)
+movie['Duration'] = movie['Duration'].str.strip('min')
+movie['Duration'].fillna(movie['Duration'].median,inplace=True)
+movie.isnull().sum()
+movie.info()
+movie.head()
+movie.nunique()
+movie['Genre'].value_counts()
+movie=movie.dropna()
+movie.isnull().sum()
+top_movie = movie.loc(movie['Rating'].sort_values(ascending=False)[:10].index)
+top_movie
+sns.histplot(data=top_movie, x="Year",hue="Rating",multiple="stack")
+plt.title("Distribution of movied", fontsize=16)
+plt.xlabel("Year", fontsize=14)
+plt.ylabel("Rating", fontsize=14)
+plt.tight_layout()
+plt.show()
+genre_counts = movie['Genre'].value_counts().reset_index()
+genre_counts.columns = ['Genre', 'Count']
+top_n_genres = genre_counts.head(s)
+top_n_genres
+plt.figure(figsize=(4,4))
+plt.pio(top_n_genres['Count'], labels=top_n_genres['Genre'], autopcts'%1.1f%%', startangle=140,colors=sns.color_palette('pastel'))
+plt.title=("Movie Genre Distribution", fontsize=16)
+plt.axis('equal')
+plt.show()
+director_avg=movie.groupby('Director')['Rating'].mean().reset_index()
+director_avg=director_avg.sort_values(by='Rating',ascending=False)
+top_directors= director_avg.head(10)
+top_directors
+plt.figure(figsize=(12,5))
+sns.barplot(data=top_directors, x='Rating', y='Director', palette='viridis')
+plt.title("Top Directors by Average Rating",fontsize=30)
+plt.xlabel('Average Rating',fontsize=14)
+plt.ylabel('Director',fontsize=30)
+plt.show()
+actor_counts = movie['Actor 1'].value_counts().reset_index()
+actor_counts.columns = ['Actor','MovieCount']
+top_n_actors = actor_counts.head(10)
+top_n_actors
+
+

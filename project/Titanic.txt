@@ -1,0 +1,50 @@
+import pandas as pd
+from matplotlib import pyplot as plt
+t_train=pd.read_csv('train.csv')
+t_test=pd.read_csv('test.csv')
+t_train.head()
+t_train.shape
+t_train['Survived'].value_counts()
+plt.figure(figsize=(5,5))
+plt.bar(list(t_train['Survived'].value_counts().keys()),list(t_train['Survived'].value_counts()),color="r")
+plt.show()
+plt.figure(figsize=(5,5))
+plt.bar(list(t_train['Survived'].value_counts().keys()),list(t_train['Survived'].value_counts()),color=["r","g"])
+plt.show()
+t_train['Pclass'].value_counts()
+plt.figure(figsize=(5,5))
+plt.bar(list(t_train['Pclass'].value_counts().keys()),list(t_train['Pclass'].value_counts()),color="Orange")
+plt.show()
+plt.figure(figsize=(5,5))
+plt.bar(list(t_train['Pclass'].value_counts().keys()),list(t_train['Pclass'].value_counts()),color=["red","green","blue"])
+plt.show()
+t_train['Sex'].value_counts()
+plt.figure(figsize=(5,5))
+plt.bar(list(t_train['Sex'].value_counts().keys()),list(t_train['Sex'].value_counts()),color=["violet","yellow"])
+plt.show()
+plt.figure(figsize=(5,7))
+plt.hist(t_train['Age'])
+plt.title("Distribution of Age")
+plt.xlabel("Age")
+plt.show()
+t_train.isnull()
+t_train['Survived'].isnull()
+sum(t_train['Survived'].isnull())
+t_train['Age'].isnull()
+sum(t_train['Age'].isnull())
+t_train=t_train.dropna()
+sum(t_train['Survived'].isnull())
+sum(t_train['Age'].isnull())
+x_train=t_train[['Age']]
+y_train=t_train[['Survived']]
+from sklearn.tree import DecisionTreeClassifier
+dtc = DecisionTreeClassifier()
+dtc.fit(x_train,y_train)
+sum(t_test['Age'].isnull())
+t_test=t_test.dropna()
+sum(t_test['Age'].isnull())
+x_test=t_test[['Age']]
+y_pred=dtc.predict(x_test)
+y_pred
+
+
